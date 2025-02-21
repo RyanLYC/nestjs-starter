@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Logger, Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as dotenv from 'dotenv';
@@ -6,12 +6,13 @@ import * as Joi from 'joi';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigEnum } from './enum/config.enum';
 import { User } from './user/user.entity';
-import { Logs } from './logs/logs.entity';
+import { Logs } from './logger/logger.entity';
 import { Profile } from './user/profile.entity';
 import { Roles } from './roles/roles.entity';
 
 const envFilePath = `.env.${process.env.NODE_ENV || `development`}`;
 
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -63,6 +64,7 @@ const envFilePath = `.env.${process.env.NODE_ENV || `development`}`;
     UserModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [Logger],
+  exports: [Logger],
 })
 export class AppModule {}

@@ -1,13 +1,14 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Logger } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ConfigService } from '@nestjs/config';
+// import { ConfigService } from '@nestjs/config';
 import { User } from './user.entity';
 
 @Controller('user')
 export class UserController {
   constructor(
     private userService: UserService,
-    private configService: ConfigService,
+    // private configService: ConfigService,
+    private readonly logger: Logger,
   ) {}
 
   @Post()
@@ -20,6 +21,7 @@ export class UserController {
 
   @Get()
   getUsers(): any {
+    this.logger.warn(`请求getUsers成功`);
     return this.userService.findAll();
     // return this.userService.getUsers();
   }

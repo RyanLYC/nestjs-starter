@@ -7,7 +7,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Logs } from '../logs/logs.entity';
+import { Logs } from '../logger/logger.entity';
 import { Roles } from '../roles/roles.entity';
 import { Profile } from './profile.entity';
 
