@@ -21,6 +21,7 @@ export class UserController {
 
   @Get()
   getUsers(): any {
+    this.logger.log(`请求getUsers成功`);
     this.logger.warn(`请求getUsers成功`);
     return this.userService.findAll();
     // return this.userService.getUsers();

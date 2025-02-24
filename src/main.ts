@@ -1,8 +1,9 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as winston from 'winston';
 import { utilities, WinstonModule } from 'nest-winston';
 import 'winston-daily-rotate-file';
+import { AllExceptionFilter } from './filters/all-exception.filter';
 
 async function bootstrap() {
   const instance = winston.createLogger({
@@ -44,12 +45,16 @@ async function bootstrap() {
       }),
     ],
   });
+  const logger = WinstonModule.createLogger({
+    instance,
+  });
   const app = await NestFactory.create(AppModule, {
-    logger: WinstonModule.createLogger({
-      instance,
-    }),
+    logger,
   });
   app.setGlobalPrefix('api/v1');
+  const httpAdapter = app.get(HttpAdapterHost);
+  // 全局Filter只能有一个
+  app.useGlobalFilters(new AllExceptionFilter(logger, httpAdapter));
   await app.listen(process.env.PORT ?? 3000);
 }
 
