@@ -9,7 +9,9 @@ export class UserController {
     private userService: UserService,
     // private configService: ConfigService,
     private readonly logger: Logger,
-  ) {}
+  ) {
+    this.logger.log('UserController init');
+  }
 
   @Post()
   addUser(): any {
@@ -23,6 +25,7 @@ export class UserController {
   getUsers(): any {
     this.logger.log(`请求getUsers成功`);
     this.logger.warn(`请求getUsers成功`);
+    this.logger.error(`请求getUsers成功`);
     return this.userService.findAll();
     // return this.userService.getUsers();
   }

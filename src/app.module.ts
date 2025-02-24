@@ -6,9 +6,10 @@ import * as Joi from 'joi';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigEnum } from './enum/config.enum';
 import { User } from './user/user.entity';
-import { Logs } from './logger/logger.entity';
+import { Logs } from './logger/logs.entity';
 import { Profile } from './user/profile.entity';
 import { Roles } from './roles/roles.entity';
+import { LogsModule } from './logger/logs.module';
 
 const envFilePath = `.env.${process.env.NODE_ENV || `development`}`;
 
@@ -49,19 +50,8 @@ const envFilePath = `.env.${process.env.NODE_ENV || `development`}`;
           logging: ['error'], // 表示只记录与错误相关的日志信息
         }) as TypeOrmModuleOptions,
     }),
-    // TypeOrmModule.forRoot({
-    //   type: 'mysql',
-    //   host: 'localhost',
-    //   port: 3306,
-    //   username: 'root',
-    //   password: 'example',
-    //   database: 'testdb',
-    //   entities: [],
-    //   // 同步本地的schema与数据库 -> 初始化的时候去使用
-    //   synchronize: true,
-    //   logging: ['error'],
-    // }),
     UserModule,
+    LogsModule,
   ],
   controllers: [],
   providers: [Logger],
